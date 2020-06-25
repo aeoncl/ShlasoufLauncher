@@ -1,0 +1,86 @@
+﻿<Window x:Class="ShlasoufLauncherCore.Views.GameSettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ShlasoufLauncherCore.Views"
+        mc:Ignorable="d"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        Title="Options du jeu" Height="300" Width="300" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" >
+            <GradientStop Color="#003773" Offset="0.0"/>
+            <GradientStop Color="#0b4e96" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Background>
+    <Grid DataContext="{Binding GameSettingsViewModel, Source={StaticResource Locator}}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="200" />
+            <RowDefinition Height="*" />
+
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150" />
+            <ColumnDefinition Width="150" />
+
+        </Grid.ColumnDefinitions>
+        <Label Content="Configuration" Grid.Row="0" Grid.Column="0"  Margin="5 4 0 0" FontSize="13" FontFamily="Verdana">
+            <Label.Foreground>
+                <SolidColorBrush>#e6c500</SolidColorBrush>
+            </Label.Foreground>
+        </Label>
+
+        <StackPanel Margin="10 0 0 0" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left">
+            <Label Foreground="White" Content="Résolution"  Width="100" FontSize="11" FontFamily="Verdana"></Label>
+            <ComboBox ItemsSource="{Binding AvaillableRes}" SelectedValue="{Binding SelectedRes}" Width="100" Height="20" Margin="10 0 0 0"></ComboBox>
+            <Label Foreground="White" Content="Ratio d'aspect"  Width="100" FontSize="11" FontFamily="Verdana"></Label>
+            <TextBlock Text="{Binding SelectedRes.AspectRatio}" Width="100" Height="20"  Margin="10 0 0 0" >
+                <TextBlock.Foreground>
+                    <SolidColorBrush>#e6c500</SolidColorBrush>
+                </TextBlock.Foreground>
+            </TextBlock>
+            <Label ToolTip="La sensi de la souris doit se régler en priorité sur la souris, laisser ce réglage à 1 permet d'avoir la meilleure visée"  Foreground="White" Content="Sensi Souris" Width="100" FontSize="11" FontFamily="Verdana"/>
+            <TextBox Text="{Binding MouseSensi}" Width="100" Height="20"  Margin="10 0 0 0" Style="{StaticResource UnrealTextBox}"></TextBox>
+        </StackPanel>
+
+        <StackPanel Margin="7 0 0 0" Grid.Row="1" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Left">
+
+            <Label ToolTip="Le FOV règle votre champ de vision"  Foreground="White" Content="FOV" Width="100" FontSize="11" FontFamily="Verdana"/>
+            <TextBox Text="{Binding FOV}" Width="100" Height="20"  Margin="10 0 0 0" Style="{StaticResource UnrealTextBox}"></TextBox>
+
+            <Label Foreground="White" Content="Nom" Width="100" FontSize="11" FontFamily="Verdana"  />
+            <TextBox Text="{Binding PlayerName}" Width="100" Height="20" Margin="10 0 0 0" Style="{StaticResource UnrealTextBox}"/>
+            <Label ToolTip="Le KeepAliveTime détermine la quantité de paquets envoyés au serveur, si vous avez une mauvaise co, mettez le a 0.01"  Foreground="White" Content="KeepAliveTime" Width="100" FontSize="11" FontFamily="Verdana"/>
+            <TextBox Text="{Binding KeepAliveTime}" Width="100" Height="20"  Margin="10 0 0 0" Style="{StaticResource UnrealTextBox}"></TextBox>
+        </StackPanel>
+
+
+        
+        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Right">
+            <Button IsEnabled="{Binding SaveButtonEnabled}" Command="{Binding SaveConfigBtnPressed}" Content="Valider" Style="{StaticResource secondaryButton}" Width="80" Margin="0 0 25 0">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <i:CallMethodAction MethodName="Close"
+                           TargetObject="{Binding RelativeSource={RelativeSource
+                                                  Mode=FindAncestor,
+                                                  AncestorType=Window}}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+        </StackPanel>
+        
+        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Left">
+            <Button IsEnabled="{Binding SaveButtonEnabled}" Command="{Binding DefaultConfigBtnPressed}" Content="Rétablir" Style="{StaticResource secondaryButton}" Width="80" Margin="25 0 0 0">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <i:CallMethodAction MethodName="Close"
+                           TargetObject="{Binding RelativeSource={RelativeSource
+                                                  Mode=FindAncestor,
+                                                  AncestorType=Window}}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -1,0 +1,13 @@
+﻿<UserControl x:Class="ShlasoufLauncherCore.Views.UserControls.SetupBrowseUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ShlasoufLauncherCore.Views.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="40" d:DesignWidth="800">
+    <StackPanel Orientation="Horizontal">
+        <TextBox HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding SelectedPath}" TextWrapping="WrapWithOverflow" Height="40" Width="460" Margin="100 0 0 0" Style="{StaticResource UnrealTextBox}"/>
+        <Button Content="Parcourir..." Height="40" Width="100" Margin="15 0 0 0" Command="{Binding BrowseButtonCommand}" Style="{StaticResource secondaryButton}"/>
+    </StackPanel>
+</UserControl>

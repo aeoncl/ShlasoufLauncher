@@ -1,0 +1,29 @@
+﻿<Window x:Class="ShlasoufLauncherCore.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ShlasoufLauncherCore"
+        xmlns:uc="clr-namespace:ShlasoufLauncherCore.Views.UserControls"
+        mc:Ignorable="d"
+        Title="Shlasouf Launcher" Height="450" Width="800"
+        ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen"
+        IsEnabled="{Binding MainViewModel.IsMainWindowEnabled, Source={StaticResource Locator}}"
+        
+        >
+    <Window.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" >
+            <GradientStop Color="#003773" Offset="0.0"/>
+            <GradientStop Color="#0b4e96" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Background>
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/ShlasoufLauncherCore;component/Assets/2k4menuback.png" Stretch="Fill" AlignmentX="Left" Opacity="0.1"/>
+        </Grid.Background>
+
+        <uc:PlayUserControl Visibility="{Binding MainViewModel.ShowPlay,Converter={StaticResource BooleanToVisibilityConverter}, Source={StaticResource Locator}}"/>
+        <uc:SetupUserControl Visibility="{Binding MainViewModel.ShowSetup,Converter={StaticResource BooleanToVisibilityConverter} , Source={StaticResource Locator}}"/>
+        <uc:PlaySetupUserControl Visibility="{Binding MainViewModel.ShowPlaySetup,Converter={StaticResource BooleanToVisibilityConverter} , Source={StaticResource Locator}}"/>
+    </Grid>
+</Window>

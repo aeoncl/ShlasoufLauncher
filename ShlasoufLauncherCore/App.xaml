@@ -1,0 +1,240 @@
+﻿<Application x:Class="ShlasoufLauncherCore.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:ShlasoufLauncherCore"
+             xmlns:vm="clr-namespace:ShlasoufLauncherCore.ViewModels">
+    <Application.Resources>
+        <ResourceDictionary>
+            <vm:ViewModelLocator x:Key="Locator"/>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+            <Style x:Key = "primaryButton" TargetType = "Button">
+                <Setter Property="OverridesDefaultStyle" Value="True"/>
+                <Setter Property = "FontSize" Value = "18" />
+                <Setter Property="FontFamily" Value="Verdana"/>
+                <Setter Property="Foreground">
+                    <Setter.Value>
+                        <SolidColorBrush>#f8d770</SolidColorBrush>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border Name="border"
+                                    BorderThickness="1"
+                                    CornerRadius="3">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" >
+                                        <GradientStop Color="#223b88" Offset="0.35"/>
+                                        <GradientStop Color="#41589e" Offset="0.1"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Border.BorderBrush>
+                                    <SolidColorBrush>#6d86a1</SolidColorBrush>
+                                </Border.BorderBrush>
+                                <Grid>
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <ContentPresenter.RenderTransform>
+                                            <TranslateTransform X="1.0" Y="1.0"></TranslateTransform>
+                                        </ContentPresenter.RenderTransform>
+                                    </ContentPresenter>
+                                </Grid>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="BorderBrush" Value="#FF4788c8" />
+                                    <Setter Property="Foreground" Value="#ffffff" />
+                                    <Setter TargetName="border" Property="Background">
+                                        <Setter.Value>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" >
+                                                <GradientStop Color="#236cb2" Offset="0.1"/>
+                                                <GradientStop Color="#236cb2" Offset="0.35"/>
+                                            </LinearGradientBrush>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter TargetName="border" Property="BorderThickness">
+                                        <Setter.Value>
+                                            3
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter TargetName="border" Property="BorderBrush">
+                                        <Setter.Value>
+                                            <RadialGradientBrush>
+                                                <RadialGradientBrush.GradientStops>
+                                                    <GradientStop Color="#95eef8" Offset="0.3"/>
+                                                    <GradientStop Color="#3196f7" Offset="10"/>
+                                                </RadialGradientBrush.GradientStops>
+                                              
+                                            </RadialGradientBrush>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" >
+                                        <Setter.Value>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" >
+                                                <GradientStop Color="#216db5" Offset="0.35"/>
+                                                <GradientStop Color="#236cb2" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Setter.Value>
+                                    </Setter>
+                                   
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    
+                                    <Setter TargetName="border" Property="Background" >
+                                        <Setter.Value>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" >
+                                                <GradientStop Color="#191819" Offset="0.35"/>
+                                                <GradientStop Color="#191819" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter Property="Foreground">
+                                        <Setter.Value>
+                                            <SolidColorBrush>#403f40</SolidColorBrush>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key = "secondaryButton" TargetType = "Button">
+                <Setter Property="OverridesDefaultStyle" Value="True"/>
+                <Setter Property = "FontSize" Value = "14" />
+                <Setter Property="FontFamily" Value="Verdana"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="Foreground">
+                    <Setter.Value>
+                        <SolidColorBrush>#f8d770</SolidColorBrush>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border Name="border"
+                                    BorderThickness="1.1"
+                                    CornerRadius="1">
+                                <Border.Background>
+                                    <SolidColorBrush>#263b7e</SolidColorBrush>
+                                </Border.Background>
+                                <Border.BorderBrush>
+                                    <SolidColorBrush>#6d86a1</SolidColorBrush>
+                                </Border.BorderBrush>
+                                <Grid>
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <ContentPresenter.RenderTransform>
+                                            <TranslateTransform X="1.0" Y="1.0"></TranslateTransform>
+                                        </ContentPresenter.RenderTransform>
+                                    </ContentPresenter>
+                                </Grid>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="BorderBrush" Value="#FF4788c8" />
+                                    <Setter Property="Foreground" Value="#ffffff" />
+                                    <Setter TargetName="border" Property="Background">
+                                        <Setter.Value>
+                                            <SolidColorBrush>#236cb2</SolidColorBrush>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter TargetName="border" Property="BorderThickness">
+                                        <Setter.Value>
+                                            3
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter TargetName="border" Property="BorderBrush">
+                                        <Setter.Value>
+                                            <RadialGradientBrush>
+                                                <RadialGradientBrush.GradientStops>
+                                                    <GradientStop Color="#95eef8" Offset="0.3"/>
+                                                    <GradientStop Color="#3196f7" Offset="10"/>
+                                                </RadialGradientBrush.GradientStops>
+
+                                            </RadialGradientBrush>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" >
+                                        <Setter.Value>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" >
+                                                <GradientStop Color="#216db5" Offset="0.35"/>
+                                                <GradientStop Color="#236cb2" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Setter.Value>
+                                    </Setter>
+
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+
+                                    <Setter TargetName="border" Property="Background" >
+                                        <Setter.Value>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" >
+                                                <GradientStop Color="#191819" Offset="0.35"/>
+                                                <GradientStop Color="#191819" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter Property="Foreground">
+                                        <Setter.Value>
+                                            <SolidColorBrush>#403f40</SolidColorBrush>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="MyProgressBar" TargetType="ProgressBar">
+                <Setter Property="Foreground">
+                    <Setter.Value>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" >
+                            <GradientStop Color="#fbcf61" Offset="0.35"/>
+                            <GradientStop Color="#ad7413" Offset="0.50"/>
+                            <GradientStop Color="#dd9b32" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" >
+                            <GradientStop Color="#236cb2" Offset="0.35"/>
+                            <GradientStop Color="#236cb2" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="BorderBrush">
+                    <Setter.Value>
+                        <RadialGradientBrush>
+                            <RadialGradientBrush.GradientStops>
+                                <GradientStop Color="#95eef8" Offset="0.3"/>
+                                <GradientStop Color="#3196f7" Offset="10"/>
+                            </RadialGradientBrush.GradientStops>
+                        </RadialGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="UnrealTextBox" TargetType="TextBox">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <SolidColorBrush>#23488c</SolidColorBrush>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Foreground">
+                    <Setter.Value>
+                        <SolidColorBrush>#f7c800</SolidColorBrush>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="FontFamily" Value="Verdana"/>
+            </Style>
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

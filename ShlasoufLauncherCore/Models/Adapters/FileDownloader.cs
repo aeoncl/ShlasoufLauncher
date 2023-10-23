@@ -13,17 +13,17 @@ namespace ShlasoufLauncherCore.Models.Adapters
 
         protected readonly IMD5ComputeService _md5Service;
         protected readonly IStatusBarUpdateService _statusUpdateService;
-        protected readonly string baseDlPath;
-        public FileDownloader(IMD5ComputeService md5Service, IStatusBarUpdateService statusUpdateService)
+        protected readonly string _baseDlPath;
+        public FileDownloader(IMD5ComputeService md5Service, IStatusBarUpdateService statusUpdateService, string baseDlPath)
         {
             _md5Service = md5Service;
             _statusUpdateService = statusUpdateService;
-
-            var applicationPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            baseDlPath = applicationPath + "\\" + Properties.Resources.appDataName ;
+            _baseDlPath = baseDlPath;
         }
 
         public abstract Task<string> DownloadFile(string link, string md5);
+
+        public abstract Task<string> GetFileName(string link);
 
         public async Task<bool> IsFileValid(string path, string md5)
         {
@@ -31,7 +31,7 @@ namespace ShlasoufLauncherCore.Models.Adapters
             if (File.Exists(path))
             {
                 string fileMD5 = await _md5Service.ComputeMD5Async(path);
-                if (fileMD5 == md5)
+                if (fileMD5.ToUpper().Equals(md5.ToUpper()))
                 {
                     status = true;
                 }

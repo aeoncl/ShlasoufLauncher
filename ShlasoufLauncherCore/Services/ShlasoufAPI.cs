@@ -10,13 +10,20 @@ namespace ShlasoufLauncherCore.Services
 {
     public class ShlasoufAPI : IShlasoufAPI
     {
+
+        private ILauncherSettingsService _settingsService;
+        public ShlasoufAPI(ILauncherSettingsService launcherSettingsService)
+        {
+            this._settingsService = launcherSettingsService;
+        }
+
         public async Task<UTPackages> GetInstall()
         {
             try
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    string apiPath = "http://" + Properties.Resources.defaultServer + "/" + Properties.Resources.apiInstallPath;
+                    string apiPath = "http://" + _settingsService.GetServerURL() + "/" + Properties.Resources.apiInstallPath;
                     var responseJson = await client.GetStringAsync(apiPath);
                     var response = JsonSerializer.Deserialize<UTPackages>(responseJson);
                     return response;

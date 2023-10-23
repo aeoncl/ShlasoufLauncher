@@ -12,6 +12,9 @@ namespace ShlasoufLauncherCore.Services
         public void writeGamePath(string gamePath);
         public string GetGameKey();
         public string GetInstallPath();
+
+        public string GetServerURL();
+
         public void removePath();
     }
 }

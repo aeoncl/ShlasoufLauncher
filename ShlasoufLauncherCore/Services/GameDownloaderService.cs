@@ -10,9 +10,14 @@ namespace ShlasoufLauncherCore.Services
     public class GameDownloaderService : IGameDownloaderService
     {
         private List<IFileDownloader> _fileDownloaders;
+
+        private string _baseDlPath;
+
         public GameDownloaderService(IMD5ComputeService md5Service, IStatusBarUpdateService statusService)
         {
-            _fileDownloaders = new List<IFileDownloader>() { new MegaFileDownloader(md5Service, statusService), new ShlasoufFileDownloader(md5Service, statusService) };
+            var applicationPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            this._baseDlPath = applicationPath + "\\" + Properties.Resources.appDataName;
+            _fileDownloaders = new List<IFileDownloader>() { new MegaFileDownloader(md5Service, statusService, _baseDlPath), new ShlasoufFileDownloader(md5Service, statusService, _baseDlPath) };
         }
         public async Task<string> DownloadGame(string[] links, string md5)
         {

@@ -10,18 +10,19 @@ namespace ShlasoufLauncherCore.Models.Adapters
 {
     public class MegaFileDownloader : FileDownloader, IFileDownloader
     {
-        public MegaFileDownloader(IMD5ComputeService md5Service, IStatusBarUpdateService statusUpdateService) : base(md5Service, statusUpdateService) { }
+        public MegaFileDownloader(IMD5ComputeService md5Service, IStatusBarUpdateService statusUpdateService, String baseDlPath) : base(md5Service, statusUpdateService, baseDlPath) {}
 
         public override async Task<string> DownloadFile(string link, string md5)
         {
+            var client = new MegaApiClient();
+
             try
             {
-                var client = new MegaApiClient();
-                client.LoginAnonymous();
+                await client.LoginAnonymousAsync();
                 Uri fileLink = new Uri(link);
 
-                INodeInfo node = client.GetNodeFromLink(fileLink);
-                var path = baseDlPath + "\\" + node.Name;
+                var fileName = await GetFileName(link, client);
+                var path = _baseDlPath + "\\" + fileName;
                 bool fileValidity = await base.IsFileValid(path, md5);
 
                 if (!fileValidity)
@@ -29,7 +30,6 @@ namespace ShlasoufLauncherCore.Models.Adapters
                     File.Delete(path);
                     IProgress<double> progressHandler = new Progress<double>((percent) => _statusUpdateService.UpdateDownloadStatus(percent));
                     await client.DownloadFileAsync(fileLink, path, progressHandler);
-                    client.Logout();
                     fileValidity = await base.IsFileValid(path, md5);
                     if (!fileValidity)
                     {
@@ -42,7 +42,26 @@ namespace ShlasoufLauncherCore.Models.Adapters
             catch (Exception e)
             {
                 throw new Exception(e.StackTrace);
+            } finally
+            {
+                await client.LogoutAsync();
             }
+        }
+
+        public override async Task<string> GetFileName(string link)
+        {
+            var client = new MegaApiClient();
+            await client.LoginAnonymousAsync();
+            var fileName = await GetFileName(link, client);
+            await client.LogoutAsync();
+            return fileName;
+        }
+
+        private async Task<string> GetFileName(string link, MegaApiClient client)
+        {
+            Uri fileLink = new Uri(link);
+            INodeInfo node = await client.GetNodeFromLinkAsync(fileLink);
+            return node.Name;
         }
     }
 }

@@ -17,15 +17,16 @@ namespace ShlasoufLauncherCore.Services
             folderBrowser.InitialDirectory = path;
             folderBrowser.ValidateNames = false;
             folderBrowser.CheckFileExists = false;
-            folderBrowser.CheckPathExists = true;
+            folderBrowser.CheckPathExists = false;
             // Always default to Folder Selection.
             folderBrowser.FileName = "Sélectionner un dossier";
+
+            string finalPath = path;
             if (folderBrowser.ShowDialog() == true)
             {
-                string folderPath = Path.GetDirectoryName(folderBrowser.FileName);
-                return folderPath;
+                finalPath = Path.GetDirectoryName(folderBrowser.FileName);
             }
-            return path;
+            return finalPath;
         }
     }
 }

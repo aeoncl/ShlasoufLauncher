@@ -13,15 +13,14 @@ namespace ShlasoufLauncherCore.Models.Adapters
 {
     public class ShlasoufFileDownloader : FileDownloader, IFileDownloader
     {
-        public ShlasoufFileDownloader(IMD5ComputeService md5Service, IStatusBarUpdateService statusUpdateService) : base(md5Service, statusUpdateService) { }
+        public ShlasoufFileDownloader(IMD5ComputeService md5Service, IStatusBarUpdateService statusUpdateService, String baseDlPath) : base(md5Service, statusUpdateService, baseDlPath) { }
 
         public override async Task<string> DownloadFile(string link, string md5)
         {
             try
             {
-                var indexOf = link.LastIndexOf("/");
-                string fileName = link.Substring(indexOf + 1);
-                string path = baseDlPath + "\\" + fileName;
+                var fileName = await GetFileName(link);
+                string path = _baseDlPath + "\\" + fileName;
                 bool fileValidity = await base.IsFileValid(path, md5);
                 if (!fileValidity) { 
                     File.Delete(path);
@@ -46,6 +45,14 @@ namespace ShlasoufLauncherCore.Models.Adapters
                 throw new Exception(e.StackTrace);
             }
         }
+
+        public override Task<string> GetFileName(string link)
+        {
+            var indexOf = link.LastIndexOf("/");
+            string fileName = link.Substring(indexOf + 1);
+            return Task.FromResult(fileName);
+        }
+
         private void ProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
             _statusUpdateService.UpdateDownloadStatus(e.ProgressPercentage);

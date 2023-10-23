@@ -105,7 +105,13 @@ namespace ShlasoufLauncherCore.Services
             var config = this.getConfig();
             config.gamePath = "";
             writeConfigFile(config);
-        }   
+        }
+
+        public string GetServerURL()
+        {
+            var config = this.getConfig();
+            return config.server;
+        }
     }
 
 }
